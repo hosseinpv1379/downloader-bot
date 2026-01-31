@@ -3,7 +3,7 @@ from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes
 from config import BOT_TOKEN
 import database.core as db
-from plugins import general, admin, instagram, spotify
+from plugins import general, admin, instagram, spotify, tts
 
 # Logging setup
 logging.basicConfig(
@@ -28,7 +28,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
         
     # Default response if no link matched
-    await update.message.reply_text("لینک ارسال شده پشتیبانی نمی‌شود. لطفا لینک اینستاگرام یا اسپاتیفای ارسال کنید.")
+    await update.message.reply_text("لینک ارسال شده پشتیبانی نمی‌شود. لطفا لینک اینستاگرام یا اسپاتیفای ارسال کنید.\nبرای تبدیل متن به صدا از دستور /tts استفاده کنید.")
 
 def main():
     # Initialize DB
@@ -43,6 +43,9 @@ def main():
     # General Handlers
     application.add_handler(CommandHandler("start", general.start))
     application.add_handler(CommandHandler("help", general.help_command))
+    
+    # TTS Handler
+    application.add_handler(CommandHandler("tts", tts.tts_command))
     
     # Admin Handlers
     application.add_handler(CommandHandler("stats", admin.stats))

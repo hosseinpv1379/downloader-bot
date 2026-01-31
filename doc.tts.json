@@ -1,0 +1,191 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "TTS API - One-Api",
+    "description": "وبسرویس متن به گفتار",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.one-api.ir/tts/v1"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Google"
+    },
+    {
+      "name": "Microsoft"
+    }
+  ],
+  "paths": {
+    "/google/": {
+      "post": {
+        "tags": [
+          "Google"
+        ],
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "requestBody": {
+          "description": "<div dir=\"rtl\">زبان از استاندارد <a href=\"https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes\">ISO 639</a> پشتیبانی میکنند.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "lang": {
+                    "type": "string",
+                    "example": "en"
+                  },
+                  "text": {
+                    "type": "string",
+                    "example": "Hello World!"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "audio/mpeg": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request contains invalid parameters."
+          },
+          "401": {
+            "description": "The authentication token is not provided."
+          },
+          "403": {
+            "description": "The request could not be completed due to insufficient credit."
+          },
+          "409": {
+            "description": "The requested path does not exist."
+          },
+          "500": {
+            "description": "The server returned an empty response. Please try again later."
+          }
+        }
+      }
+    },
+    "/microsoft/list": {
+      "get": {
+        "description": "لیست زبان ها و گوینده ها",
+        "tags": [
+          "Microsoft"
+        ],
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "The request contains invalid parameters."
+          },
+          "401": {
+            "description": "The authentication token is not provided."
+          },
+          "403": {
+            "description": "The request could not be completed due to insufficient credit."
+          },
+          "409": {
+            "description": "The requested path does not exist."
+          },
+          "500": {
+            "description": "The server returned an empty response. Please try again later."
+          }
+        }
+      }
+    },
+    "/microsoft/": {
+      "post": {
+        "tags": [
+          "Microsoft"
+        ],
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "requestBody": {
+          "description": "لیست زبان ها و گوینده ها از وبسرویس فوق قابل دریافت است، باید از مقدار پارامتر ShortName استفاده شود.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "voice": {
+                    "type": "string"
+                  },
+                  "text": {
+                    "type": "string",
+                    "example": "Hello World!"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "audio/mpeg": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request contains invalid parameters."
+          },
+          "401": {
+            "description": "The authentication token is not provided."
+          },
+          "403": {
+            "description": "The request could not be completed due to insufficient credit."
+          },
+          "409": {
+            "description": "The requested path does not exist."
+          },
+          "500": {
+            "description": "The server returned an empty response. Please try again later."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "api_key": {
+        "type": "apiKey",
+        "name": "one-api-token",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "api_key": []
+    }
+  ]
+}
