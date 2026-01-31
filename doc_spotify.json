@@ -1,0 +1,1795 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Spotify API - One-Api",
+    "description": "وبسرویس جستجو آهنگ، پلی لیست، آلبوم و پادکست و دانلود مستقیم از اسپاتیفای",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.one-api.ir/spotify/v1"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Search"
+    },
+    {
+      "name": "User"
+    },
+    {
+      "name": "Artist"
+    },
+    {
+      "name": "Album"
+    },
+    {
+      "name": "Playlist"
+    },
+    {
+      "name": "Track"
+    },
+    {
+      "name": "Episode"
+    },
+    {
+      "name": "Show"
+    },
+    {
+      "name": "Market"
+    }
+  ],
+  "paths": {
+    "/artists/{id}": {
+      "get": {
+        "tags": [
+          "Artist"
+        ],
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "description": "Artist's info",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Unique identifier of the artist",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 12345
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "link": {
+                          "type": "string"
+                        },
+                        "share": {
+                          "type": "string"
+                        },
+                        "picture_small": {
+                          "type": "string"
+                        },
+                        "picture_medium": {
+                          "type": "string"
+                        },
+                        "picture_big": {
+                          "type": "string"
+                        },
+                        "picture_xl": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string",
+                          "example": "artist"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request contains invalid parameters."
+          },
+          "401": {
+            "description": "The authentication token is not provided."
+          },
+          "403": {
+            "description": "The request could not be completed due to insufficient credit."
+          },
+          "404": {
+            "description": "The requested post has been restricted or removed."
+          },
+          "409": {
+            "description": "The requested path does not exist."
+          },
+          "500": {
+            "description": "The server returned an empty response. Please try again later."
+          }
+        }
+      }
+    },
+    "/artists/{id}/top-tracks": {
+      "get": {
+        "tags": [
+          "Artist"
+        ],
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "description": "Artist's toptracks",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Unique identifier of the artist",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "example": 20
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "example": 0
+            }
+          },
+          {
+            "name": "market",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "US"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "type": "object"
+                          }
+                        },
+                        "total": {
+                          "type": "integer",
+                          "example": 100
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request contains invalid parameters."
+          },
+          "401": {
+            "description": "The authentication token is not provided."
+          },
+          "403": {
+            "description": "The request could not be completed due to insufficient credit."
+          },
+          "404": {
+            "description": "The requested post has been restricted or removed."
+          },
+          "409": {
+            "description": "The requested path does not exist."
+          },
+          "500": {
+            "description": "The server returned an empty response. Please try again later."
+          }
+        }
+      }
+    },
+    "/artists/{id}/albums": {
+      "get": {
+        "tags": [
+          "Artist"
+        ],
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "description": "Return a list of Artist's albums",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Unique identifier of the artist",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "example": 20
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "example": 0
+            }
+          },
+          {
+            "name": "market",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "US"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "type": "object"
+                          }
+                        },
+                        "total": {
+                          "type": "integer",
+                          "example": 100
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request contains invalid parameters."
+          },
+          "401": {
+            "description": "The authentication token is not provided."
+          },
+          "403": {
+            "description": "The request could not be completed due to insufficient credit."
+          },
+          "404": {
+            "description": "The requested post has been restricted or removed."
+          },
+          "409": {
+            "description": "The requested path does not exist."
+          },
+          "500": {
+            "description": "The server returned an empty response. Please try again later."
+          }
+        }
+      }
+    },
+    "/albums/{id}": {
+      "get": {
+        "tags": [
+          "Album"
+        ],
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "description": "Get Album's info",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Unique identifier of the album",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 12345
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "link": {
+                          "type": "string"
+                        },
+                        "share": {
+                          "type": "string"
+                        },
+                        "picture_small": {
+                          "type": "string"
+                        },
+                        "picture_medium": {
+                          "type": "string"
+                        },
+                        "picture_big": {
+                          "type": "string"
+                        },
+                        "picture_xl": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string",
+                          "example": "artist"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request contains invalid parameters."
+          },
+          "401": {
+            "description": "The authentication token is not provided."
+          },
+          "403": {
+            "description": "The request could not be completed due to insufficient credit."
+          },
+          "404": {
+            "description": "The requested post has been restricted or removed."
+          },
+          "409": {
+            "description": "The requested path does not exist."
+          },
+          "500": {
+            "description": "The server returned an empty response. Please try again later."
+          }
+        }
+      }
+    },
+    "/albums/{id}/tracks": {
+      "get": {
+        "tags": [
+          "Album"
+        ],
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "description": "Return a list of albums's tracks",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Unique identifier of the album",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "example": 20
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "example": 0
+            }
+          },
+          {
+            "name": "market",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "US"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "type": "object"
+                          }
+                        },
+                        "total": {
+                          "type": "integer",
+                          "example": 100
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request contains invalid parameters."
+          },
+          "401": {
+            "description": "The authentication token is not provided."
+          },
+          "403": {
+            "description": "The request could not be completed due to insufficient credit."
+          },
+          "404": {
+            "description": "The requested post has been restricted or removed."
+          },
+          "409": {
+            "description": "The requested path does not exist."
+          },
+          "500": {
+            "description": "The server returned an empty response. Please try again later."
+          }
+        }
+      }
+    },
+    "/search": {
+      "get": {
+        "tags": [
+          "Search"
+        ],
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "description": "Search",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "example": 20
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "example": 0
+            }
+          },
+          {
+            "name": "market",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "US"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "result": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request contains invalid parameters."
+          },
+          "401": {
+            "description": "The authentication token is not provided."
+          },
+          "403": {
+            "description": "The request could not be completed due to insufficient credit."
+          },
+          "409": {
+            "description": "The requested path does not exist."
+          },
+          "500": {
+            "description": "The server returned an empty response. Please try again later."
+          }
+        }
+      }
+    },
+    "/browse/new-releases": {
+      "get": {
+        "tags": [
+          "Search"
+        ],
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "description": "Get a list of new album releases featured in Spotify",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "example": 20
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "example": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "result": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request contains invalid parameters."
+          },
+          "401": {
+            "description": "The authentication token is not provided."
+          },
+          "403": {
+            "description": "The request could not be completed due to insufficient credit."
+          },
+          "409": {
+            "description": "The requested path does not exist."
+          },
+          "500": {
+            "description": "The server returned an empty response. Please try again later."
+          }
+        }
+      }
+    },
+    "/episodes/{id}": {
+      "get": {
+        "tags": [
+          "Episode"
+        ],
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "description": "Episode's info",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Unique identifier of the episode",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "market",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "US"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 12345
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "link": {
+                          "type": "string"
+                        },
+                        "share": {
+                          "type": "string"
+                        },
+                        "picture_small": {
+                          "type": "string"
+                        },
+                        "picture_medium": {
+                          "type": "string"
+                        },
+                        "picture_big": {
+                          "type": "string"
+                        },
+                        "picture_xl": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string",
+                          "example": "artist"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request contains invalid parameters."
+          },
+          "401": {
+            "description": "The authentication token is not provided."
+          },
+          "403": {
+            "description": "The request could not be completed due to insufficient credit."
+          },
+          "404": {
+            "description": "The requested post has been restricted or removed."
+          },
+          "409": {
+            "description": "The requested path does not exist."
+          },
+          "500": {
+            "description": "The server returned an empty response. Please try again later."
+          }
+        }
+      }
+    },
+    "/episodes/{id}/download": {
+      "get": {
+        "tags": [
+          "Episode"
+        ],
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "description": "Episode's info",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Unique identifier of the episode",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "result": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request contains invalid parameters."
+          },
+          "401": {
+            "description": "The authentication token is not provided."
+          },
+          "403": {
+            "description": "The request could not be completed due to insufficient credit."
+          },
+          "404": {
+            "description": "The requested post has been restricted or removed."
+          },
+          "409": {
+            "description": "The requested path does not exist."
+          },
+          "500": {
+            "description": "The server returned an empty response. Please try again later."
+          }
+        }
+      }
+    },
+    "/shows/{id}": {
+      "get": {
+        "tags": [
+          "Show"
+        ],
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "description": "Show's info",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Unique identifier of the Show",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "market",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "US"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 12345
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "link": {
+                          "type": "string"
+                        },
+                        "share": {
+                          "type": "string"
+                        },
+                        "picture_small": {
+                          "type": "string"
+                        },
+                        "picture_medium": {
+                          "type": "string"
+                        },
+                        "picture_big": {
+                          "type": "string"
+                        },
+                        "picture_xl": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string",
+                          "example": "artist"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request contains invalid parameters."
+          },
+          "401": {
+            "description": "The authentication token is not provided."
+          },
+          "403": {
+            "description": "The request could not be completed due to insufficient credit."
+          },
+          "404": {
+            "description": "The requested post has been restricted or removed."
+          },
+          "409": {
+            "description": "The requested path does not exist."
+          },
+          "500": {
+            "description": "The server returned an empty response. Please try again later."
+          }
+        }
+      }
+    },
+    "/shows/{id}/episodes": {
+      "get": {
+        "tags": [
+          "Show"
+        ],
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "description": "Return a list of Show's episodes",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Unique identifier of the album",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "example": 20
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "example": 0
+            }
+          },
+          {
+            "name": "market",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "US"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "type": "object"
+                          }
+                        },
+                        "total": {
+                          "type": "integer",
+                          "example": 100
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request contains invalid parameters."
+          },
+          "401": {
+            "description": "The authentication token is not provided."
+          },
+          "403": {
+            "description": "The request could not be completed due to insufficient credit."
+          },
+          "404": {
+            "description": "The requested post has been restricted or removed."
+          },
+          "409": {
+            "description": "The requested path does not exist."
+          },
+          "500": {
+            "description": "The server returned an empty response. Please try again later."
+          }
+        }
+      }
+    },
+    "/markets": {
+      "get": {
+        "tags": [
+          "Market"
+        ],
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "description": "Get the list of markets where Spotify is available.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "type": "object"
+                          }
+                        },
+                        "total": {
+                          "type": "integer",
+                          "example": 100
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request contains invalid parameters."
+          },
+          "401": {
+            "description": "The authentication token is not provided."
+          },
+          "403": {
+            "description": "The request could not be completed due to insufficient credit."
+          },
+          "404": {
+            "description": "The requested post has been restricted or removed."
+          },
+          "409": {
+            "description": "The requested path does not exist."
+          },
+          "500": {
+            "description": "The server returned an empty response. Please try again later."
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "description": "User's info",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Unique identifier of the Show",
+            "schema": {
+              "type": "string",
+              "example": "smedjan"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 12345
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "link": {
+                          "type": "string"
+                        },
+                        "share": {
+                          "type": "string"
+                        },
+                        "picture_small": {
+                          "type": "string"
+                        },
+                        "picture_medium": {
+                          "type": "string"
+                        },
+                        "picture_big": {
+                          "type": "string"
+                        },
+                        "picture_xl": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string",
+                          "example": "artist"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request contains invalid parameters."
+          },
+          "401": {
+            "description": "The authentication token is not provided."
+          },
+          "403": {
+            "description": "The request could not be completed due to insufficient credit."
+          },
+          "404": {
+            "description": "The requested post has been restricted or removed."
+          },
+          "409": {
+            "description": "The requested path does not exist."
+          },
+          "500": {
+            "description": "The server returned an empty response. Please try again later."
+          }
+        }
+      }
+    },
+    "/users/{id}/playlists": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "description": "User's playlists",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Unique identifier of the Show",
+            "schema": {
+              "type": "string",
+              "example": "smedjan"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "example": 20
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "example": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 12345
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "link": {
+                          "type": "string"
+                        },
+                        "share": {
+                          "type": "string"
+                        },
+                        "picture_small": {
+                          "type": "string"
+                        },
+                        "picture_medium": {
+                          "type": "string"
+                        },
+                        "picture_big": {
+                          "type": "string"
+                        },
+                        "picture_xl": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string",
+                          "example": "artist"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request contains invalid parameters."
+          },
+          "401": {
+            "description": "The authentication token is not provided."
+          },
+          "403": {
+            "description": "The request could not be completed due to insufficient credit."
+          },
+          "404": {
+            "description": "The requested post has been restricted or removed."
+          },
+          "409": {
+            "description": "The requested path does not exist."
+          },
+          "500": {
+            "description": "The server returned an empty response. Please try again later."
+          }
+        }
+      }
+    },
+    "/playlists/{id}": {
+      "get": {
+        "tags": [
+          "Playlist"
+        ],
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "description": "Get playlist's info",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Unique identifier of the playlists",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 12345
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "link": {
+                          "type": "string"
+                        },
+                        "share": {
+                          "type": "string"
+                        },
+                        "picture_small": {
+                          "type": "string"
+                        },
+                        "picture_medium": {
+                          "type": "string"
+                        },
+                        "picture_big": {
+                          "type": "string"
+                        },
+                        "picture_xl": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string",
+                          "example": "artist"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request contains invalid parameters."
+          },
+          "401": {
+            "description": "The authentication token is not provided."
+          },
+          "403": {
+            "description": "The request could not be completed due to insufficient credit."
+          },
+          "404": {
+            "description": "The requested post has been restricted or removed."
+          },
+          "409": {
+            "description": "The requested path does not exist."
+          },
+          "500": {
+            "description": "The server returned an empty response. Please try again later."
+          }
+        }
+      }
+    },
+    "/playlists/{id}/tracks": {
+      "get": {
+        "tags": [
+          "Playlist"
+        ],
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "description": "Return a list of playlist's tracks",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Unique identifier of the playlist",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "example": 20
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "example": 0
+            }
+          },
+          {
+            "name": "market",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "US"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "type": "object"
+                          }
+                        },
+                        "total": {
+                          "type": "integer",
+                          "example": 100
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request contains invalid parameters."
+          },
+          "401": {
+            "description": "The authentication token is not provided."
+          },
+          "403": {
+            "description": "The request could not be completed due to insufficient credit."
+          },
+          "404": {
+            "description": "The requested post has been restricted or removed."
+          },
+          "409": {
+            "description": "The requested path does not exist."
+          },
+          "500": {
+            "description": "The server returned an empty response. Please try again later."
+          }
+        }
+      }
+    },
+    "/tracks/{id}": {
+      "get": {
+        "tags": [
+          "Track"
+        ],
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "description": "Get track's info",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Unique identifier of the track",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "market",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "US"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 12345
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "link": {
+                          "type": "string"
+                        },
+                        "share": {
+                          "type": "string"
+                        },
+                        "picture_small": {
+                          "type": "string"
+                        },
+                        "picture_medium": {
+                          "type": "string"
+                        },
+                        "picture_big": {
+                          "type": "string"
+                        },
+                        "picture_xl": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string",
+                          "example": "artist"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request contains invalid parameters."
+          },
+          "401": {
+            "description": "The authentication token is not provided."
+          },
+          "403": {
+            "description": "The request could not be completed due to insufficient credit."
+          },
+          "404": {
+            "description": "The requested post has been restricted or removed."
+          },
+          "409": {
+            "description": "The requested path does not exist."
+          },
+          "500": {
+            "description": "The server returned an empty response. Please try again later."
+          }
+        }
+      }
+    },
+    "/tracks/{id}/lyrics": {
+      "get": {
+        "tags": [
+          "Track"
+        ],
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "description": "Get track's lyrics",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Unique identifier of the track",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "result": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request contains invalid parameters."
+          },
+          "401": {
+            "description": "The authentication token is not provided."
+          },
+          "403": {
+            "description": "The request could not be completed due to insufficient credit."
+          },
+          "404": {
+            "description": "The requested post has been restricted or removed."
+          },
+          "409": {
+            "description": "The requested path does not exist."
+          },
+          "500": {
+            "description": "The server returned an empty response. Please try again later."
+          }
+        }
+      }
+    },
+    "/tracks/{id}/download/{quality}": {
+      "get": {
+        "tags": [
+          "Track"
+        ],
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "description": "Get track's download link",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Unique identifier of the track",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "quality",
+            "in": "path",
+            "required": true,
+            "description": "Unique identifier of the track",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "OGG_320",
+                "OGG_160",
+                "OGG_96"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "result": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request contains invalid parameters."
+          },
+          "401": {
+            "description": "The authentication token is not provided."
+          },
+          "403": {
+            "description": "The request could not be completed due to insufficient credit."
+          },
+          "404": {
+            "description": "The requested post has been restricted or removed."
+          },
+          "409": {
+            "description": "The requested path does not exist."
+          },
+          "500": {
+            "description": "The server returned an empty response. Please try again later."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "api_key": {
+        "type": "apiKey",
+        "name": "one-api-token",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "api_key": []
+    }
+  ]
+}
