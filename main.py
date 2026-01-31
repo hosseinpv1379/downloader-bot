@@ -1,14 +1,34 @@
 import logging
-from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters
+from telegram import Update
+from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes
 from config import BOT_TOKEN
 import database.core as db
-from plugins import general, admin, instagram
+from plugins import general, admin, instagram, spotify
 
 # Logging setup
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     level=logging.INFO
 )
+
+async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """
+    Central message handler to route messages to appropriate plugins.
+    """
+    message_text = update.message.text
+    
+    # Try Spotify
+    if "spotify.com" in message_text:
+        await spotify.handle_spotify_link(update, context)
+        return
+
+    # Try Instagram
+    if "instagram.com" in message_text:
+        await instagram.handle_instagram_link(update, context)
+        return
+        
+    # Default response if no link matched
+    await update.message.reply_text("لینک ارسال شده پشتیبانی نمی‌شود. لطفا لینک اینستاگرام یا اسپاتیفای ارسال کنید.")
 
 def main():
     # Initialize DB
@@ -28,9 +48,10 @@ def main():
     application.add_handler(CommandHandler("stats", admin.stats))
     application.add_handler(CommandHandler("broadcast", admin.broadcast))
     
-    # Instagram Handler
-    instagram_filter = filters.TEXT & ~filters.COMMAND
-    application.add_handler(MessageHandler(instagram_filter, instagram.handle_instagram_link))
+    # Universal Message Handler for Links
+    # We use a single handler to route based on content, avoiding conflicts
+    link_filter = filters.TEXT & ~filters.COMMAND
+    application.add_handler(MessageHandler(link_filter, handle_message))
 
     print("Bot is running...")
     application.run_polling()
