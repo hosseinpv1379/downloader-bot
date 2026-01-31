@@ -1,0 +1,751 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Instagram Downloader API - One-Api",
+    "description": "وبسرویس دریافت اطلاعات پیج ها و دانلود پست، استوری و هایلایت ها از اینستاگرام",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.one-api.ir/instagram/v1"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Post"
+    },
+    {
+      "name": "User"
+    },
+    {
+      "name": "HighLight"
+    }
+  ],
+  "paths": {
+    "/post/": {
+      "get": {
+        "tags": [
+          "Post"
+        ],
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "description": "Download & Post Information",
+        "parameters": [
+          {
+            "name": "shortcode",
+            "in": "query",
+            "description": "دانود پست اینستاگرام با کد پست",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "CilCOMcOgyB"
+            }
+          },
+          {
+            "name": "share",
+            "in": "query",
+            "description": "دانود پست اینستاگرام با کد اشتراک گذاری",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": ""
+            }
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "دانلود پست اینستاگرام با آیدی پست",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "media": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string"
+                              },
+                              "url": {
+                                "type": "string",
+                                "description": "The URL or identifier for the media content"
+                              },
+                              "cover": {
+                                "type": "string",
+                                "description": "The URL or identifier for the cover image"
+                              }
+                            }
+                          },
+                          "example": [
+                            {
+                              "type": "photo",
+                              "url": "...",
+                              "cover": "..."
+                            },
+                            {
+                              "type": "video",
+                              "url": "...",
+                              "cover": "..."
+                            }
+                          ]
+                        },
+                        "caption": {
+                          "type": "string",
+                          "description": "Caption for the media",
+                          "example": "..."
+                        },
+                        "owner": {
+                          "type": "object",
+                          "properties": {
+                            "username": {
+                              "type": "string",
+                              "example": "..."
+                            },
+                            "profile_pic_url": {
+                              "type": "string",
+                              "description": "The URL of the profile picture",
+                              "example": "..."
+                            },
+                            "is_private": {
+                              "type": "boolean",
+                              "description": "Indicates if the account is private",
+                              "example": false
+                            },
+                            "is_verified": {
+                              "type": "boolean",
+                              "description": "Indicates if the account is verified",
+                              "example": true
+                            },
+                            "id": {
+                              "type": "string",
+                              "description": "The unique identifier of the owner",
+                              "example": "123456789"
+                            },
+                            "hd_profile_pic_url_info": {
+                              "type": "object",
+                              "properties": {
+                                "url": {
+                                  "type": "string",
+                                  "description": "The URL of the high-definition profile picture",
+                                  "example": "..."
+                                }
+                              }
+                            },
+                            "full_name": {
+                              "type": "string",
+                              "description": "Full name of the owner",
+                              "example": "..."
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request contains invalid parameters."
+          },
+          "401": {
+            "description": "The authentication token is not provided."
+          },
+          "403": {
+            "description": "The request could not be completed due to insufficient credit."
+          },
+          "404": {
+            "description": "The requested post has been restricted or removed."
+          },
+          "409": {
+            "description": "The requested path does not exist."
+          },
+          "500": {
+            "description": "The server returned an empty response. Please try again later."
+          }
+        }
+      }
+    },
+    "/audio/": {
+      "get": {
+        "tags": [
+          "Post"
+        ],
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "description": "Reels Audio Information",
+        "parameters": [
+          {
+            "name": "shortcode",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "CilCOMcOgyB"
+            }
+          },
+          {
+            "name": "share",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": ""
+            }
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "result": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request contains invalid parameters."
+          },
+          "401": {
+            "description": "The authentication token is not provided."
+          },
+          "403": {
+            "description": "The request could not be completed due to insufficient credit."
+          },
+          "404": {
+            "description": "The requested post has been restricted or removed."
+          },
+          "409": {
+            "description": "The requested path does not exist."
+          },
+          "500": {
+            "description": "The server returned an empty response. Please try again later."
+          }
+        }
+      }
+    },
+    "/user/": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "description": "Get User's Page Information",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "query",
+            "description": "دریافت اطلاعات حساب با نام کاربری",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "taylorswift"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "The unique identifier of the user",
+                          "example": "123456789"
+                        },
+                        "username": {
+                          "type": "string",
+                          "description": "The username of the user",
+                          "example": "..."
+                        },
+                        "bio": {
+                          "type": "string",
+                          "description": "The bio of the user",
+                          "example": "..."
+                        },
+                        "full_name": {
+                          "type": "string",
+                          "description": "The full name of the user",
+                          "example": "...."
+                        },
+                        "type": {
+                          "type": "string",
+                          "description": "The account type (e.g., Public or Private)",
+                          "example": "Public|Private"
+                        },
+                        "profile": {
+                          "type": "string",
+                          "description": "The URL of the profile picture",
+                          "example": "..."
+                        },
+                        "profile_hd": {
+                          "type": "string",
+                          "description": "The URL of the high-definition profile picture",
+                          "example": "..."
+                        },
+                        "posts": {
+                          "type": "integer",
+                          "description": "The number of posts by the user",
+                          "example": 0
+                        },
+                        "followers": {
+                          "type": "integer",
+                          "description": "The number of followers the user has",
+                          "example": 0
+                        },
+                        "following": {
+                          "type": "integer",
+                          "description": "The number of accounts the user is following",
+                          "example": 0
+                        },
+                        "is_verified": {
+                          "type": "boolean",
+                          "description": "Indicates if the account is verified",
+                          "example": false
+                        },
+                        "is_business": {
+                          "type": "boolean",
+                          "description": "Indicates if the account is a business account",
+                          "example": false
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request contains invalid parameters."
+          },
+          "401": {
+            "description": "The authentication token is not provided."
+          },
+          "403": {
+            "description": "The request could not be completed due to insufficient credit."
+          },
+          "409": {
+            "description": "The requested path does not exist."
+          },
+          "500": {
+            "description": "The server returned an empty response. Please try again later."
+          }
+        }
+      }
+    },
+    "/user/stories/": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "description": "Get User's Recently Stories",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "آیدی عددی حساب",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "example": 11830955
+            }
+          },
+          {
+            "name": "username",
+            "in": "query",
+            "description": "نام کاربری حساب",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "taylorswift"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "result": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string"
+                          },
+                          "url": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "example": [
+                        {
+                          "type": "photo",
+                          "url": "..."
+                        },
+                        {
+                          "type": "video",
+                          "url": "..."
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request contains invalid parameters."
+          },
+          "401": {
+            "description": "The authentication token is not provided."
+          },
+          "403": {
+            "description": "The request could not be completed due to insufficient credit."
+          },
+          "404": {
+            "description": "The requested post has been restricted or removed."
+          },
+          "409": {
+            "description": "The requested path does not exist."
+          },
+          "500": {
+            "description": "The server returned an empty response. Please try again later."
+          }
+        }
+      }
+    },
+    "/user/highlights/": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "description": "Get User's HighLights List",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "آیدی عددی حساب",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 11830955
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "result": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "..."
+                          },
+                          "title": {
+                            "type": "string",
+                            "example": "..."
+                          },
+                          "cover": {
+                            "type": "string",
+                            "description": "The URL or identifier for the media content",
+                            "example": "..."
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request contains invalid parameters."
+          },
+          "401": {
+            "description": "The authentication token is not provided."
+          },
+          "403": {
+            "description": "The request could not be completed due to insufficient credit."
+          },
+          "409": {
+            "description": "The requested path does not exist."
+          },
+          "500": {
+            "description": "The server returned an empty response. Please try again later."
+          }
+        }
+      }
+    },
+    "/user/timeline/": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "description": "Get User's HighLights List",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "آیدی عددی حساب",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 11830955
+            }
+          },
+          {
+            "name": "after",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "result": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "..."
+                          },
+                          "title": {
+                            "type": "string",
+                            "example": "..."
+                          },
+                          "cover": {
+                            "type": "string",
+                            "description": "The URL or identifier for the media content",
+                            "example": "..."
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request contains invalid parameters."
+          },
+          "401": {
+            "description": "The authentication token is not provided."
+          },
+          "403": {
+            "description": "The request could not be completed due to insufficient credit."
+          },
+          "409": {
+            "description": "The requested path does not exist."
+          },
+          "500": {
+            "description": "The server returned an empty response. Please try again later."
+          }
+        }
+      }
+    },
+    "/highlight/": {
+      "get": {
+        "tags": [
+          "HighLight"
+        ],
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "description": "Get HighLight's Stories",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "آیدی هایلایت",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 17990198465180908
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "result": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string"
+                          },
+                          "url": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "example": [
+                        {
+                          "type": "photo",
+                          "url": "..."
+                        },
+                        {
+                          "type": "video",
+                          "url": "..."
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request contains invalid parameters."
+          },
+          "401": {
+            "description": "The authentication token is not provided."
+          },
+          "403": {
+            "description": "The request could not be completed due to insufficient credit."
+          },
+          "409": {
+            "description": "The requested path does not exist."
+          },
+          "500": {
+            "description": "The server returned an empty response. Please try again later."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "api_key": {
+        "type": "apiKey",
+        "name": "one-api-token",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "api_key": []
+    }
+  ]
+}
