@@ -16,9 +16,10 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     Central message handler to route messages to appropriate plugins.
     """
     message_text = update.message.text
-    if update.message.text == 'عرفان':
+    if message_text and message_text.strip() == 'عرفان':
         for i in range(30):
             await update.message.reply_text(f"کیر تو عرفان شماره :  {i+1}")
+        return
     # Try Spotify
     if "spotify.com" in message_text:
         await spotify.handle_spotify_link(update, context)
